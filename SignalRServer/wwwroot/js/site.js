@@ -17,6 +17,12 @@ broadcastBtn.addEventListener('click', () => {
     connection.invoke("BroadcastMessage", broadcast.value).catch(err => console.error(err.toString()));
 });
 
+const othersBtn = document.getElementById('btn-others');
+const othersMsg = document.getElementById('others-msg');
+othersBtn.addEventListener('click', () => {
+    connection.invoke("SendToOthers", othersMsg.value).catch(err => console.error(err.toString()));
+})
+
 
 async function start() {
     try {

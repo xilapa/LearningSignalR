@@ -9,6 +9,11 @@ public class LearningHub : Hub<ILearningHubClient>
         return Clients.All.ReceiveMessage(msg);
     }
 
+    public Task SendToOthers(string msg)
+    {
+        return Clients.Others.ReceiveMessage(msg);
+    }
+
     public override Task OnConnectedAsync()
     {
         return base.OnConnectedAsync();
