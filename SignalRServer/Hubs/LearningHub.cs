@@ -14,6 +14,11 @@ public class LearningHub : Hub<ILearningHubClient>
         return Clients.Others.ReceiveMessage(msg);
     }
 
+    public Task SendToCaller(string msg)
+    {
+        return Clients.Caller.ReceiveMessage(msg);
+    }
+
     public override Task OnConnectedAsync()
     {
         return base.OnConnectedAsync();

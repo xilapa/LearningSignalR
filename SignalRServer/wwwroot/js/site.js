@@ -23,6 +23,11 @@ othersBtn.addEventListener('click', () => {
     connection.invoke("SendToOthers", othersMsg.value).catch(err => console.error(err.toString()));
 })
 
+const selftBtn = document.getElementById('btn-self-message');
+const selfMsg = document.getElementById('self-message');
+selftBtn.addEventListener('click', () => {
+    connection.invoke("SendToCaller", selfMsg.value).catch(err => console.error(err.toString()));
+})
 
 async function start() {
     try {

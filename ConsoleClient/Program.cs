@@ -20,6 +20,7 @@ try
         Console.WriteLine("Please specify the action:");
         Console.WriteLine("0 - broadcast to all");
         Console.WriteLine("1 - send to others");
+        Console.WriteLine("2 - send to caller");
         Console.WriteLine("exit - Exit the program");
 
         var action = Console.ReadLine();
@@ -37,6 +38,9 @@ try
                 break;
             case "1":
                 await conn.SendAsync("SendToOthers", msg);
+                break;
+            case "2":
+                await conn.SendAsync("SendToCaller", msg);
                 break;
         }
     }
