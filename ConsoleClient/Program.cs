@@ -6,7 +6,8 @@ var conn = new HubConnectionBuilder()
     .WithUrl(url)
     .Build();
 
-conn.On<string>("ReceiveMessage", msg => { Console.WriteLine(msg); });
+conn.On<string>("ReceiveMessage", msg => Console.WriteLine(msg));
+conn.On<string>("PrivateMessage", msg => Console.WriteLine(msg));
 
 try
 {
@@ -21,6 +22,8 @@ try
         Console.WriteLine("0 - broadcast to all");
         Console.WriteLine("1 - send to others");
         Console.WriteLine("2 - send to caller");
+        Console.WriteLine("3 - get connection id");
+        Console.WriteLine("4 - send a private message to a specific user");
         Console.WriteLine("exit - Exit the program");
 
         var action = Console.ReadLine();
@@ -41,6 +44,14 @@ try
                 break;
             case "2":
                 await conn.SendAsync("SendToCaller", msg);
+                break;
+            case "3":
+                await conn.SendAsync("GetConnectionId");
+                break;
+            case "4":
+                Console.WriteLine("Please specify the user id:");
+                var id = Console.ReadLine();
+                await conn.SendAsync("SendMessageTo", msg, id);
                 break;
         }
     }

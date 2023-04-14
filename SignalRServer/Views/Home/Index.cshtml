@@ -22,7 +22,6 @@
     </div>
 
 
-
     <div class='control-group'>
         <div>
             <label for='self-message'>Message</label>
@@ -31,9 +30,26 @@
         <button id='btn-self-message'>Send to Self</button>
     </div>
 
-    
-        <div class="col-md-7">
-            <p>SignalR Messages:</p>
-            <pre id="signalr-message-panel"></pre>
+    <div class='control-group'>
+        <button id='btn-conn-id'>ConnectionId</button>
+    </div>
+
+
+    <div class='control-group'>
+        <div>
+            <label for='user-id-input'>User Id</label>
+            <input type='text' id='user-id-input' name='user-id-input'/>
         </div>
+        <div>
+            <label for='user-id-input'>Private message</label>
+            <input type='text' id='private-message' name='private-message'/>
+        </div>
+        <button id='btn-private=-message'>Send to user</button>
+    </div>
+
+
+    <div class="col-md-7">
+        <p>SignalR Messages:</p>
+        <pre id="signalr-message-panel"></pre>
+    </div>
 </div>
