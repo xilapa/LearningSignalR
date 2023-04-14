@@ -47,6 +47,25 @@ privateMsgBtn.addEventListener('click', () => {
     connection.invoke("SendMessageTo", privateMsg.value, userId.value).catch(err => console.error(err.toString()));
 })
 
+const groupMsg = document.getElementById('group-message');
+const groupName = document.getElementById('group-name');
+const groupMsgBtn = document.getElementById('btn-group-message');
+groupMsgBtn.addEventListener('click', () => {
+    connection.invoke("SendToGroup", groupMsg.value, groupName.value).catch(err => console.error(err.toString()));
+})
+
+const joinGroupName = document.getElementById('group-to-join');
+const joinGroupBtn = document.getElementById('btn-join-group');
+joinGroupBtn.addEventListener('click', () => {
+    connection.invoke("JoinGroup", joinGroupName.value).catch(err => console.error(err.toString()));
+})
+
+const leaveGroupName = document.getElementById('group-to-leave');
+const leaveGroupBtn = document.getElementById('btn-leave-group');
+leaveGroupBtn.addEventListener('click', () => {
+    connection.invoke("LeaveGroup", leaveGroupName.value).catch(err => console.error(err.toString()));
+})
+
 async function start() {
     try {
         await connection.start();

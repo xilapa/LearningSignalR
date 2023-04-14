@@ -24,11 +24,21 @@ try
         Console.WriteLine("2 - send to caller");
         Console.WriteLine("3 - get connection id");
         Console.WriteLine("4 - send a private message to a specific user");
+        Console.WriteLine("5 - send message to a group");
+        Console.WriteLine("6 - join a group");
+        Console.WriteLine("7 - leave a group");
         Console.WriteLine("exit - Exit the program");
 
         var action = Console.ReadLine();
         if (action == "exit")
             break;
+        
+        var groupName = string.Empty;
+        if (action is "5" or "6" or "7")
+        { 
+            Console.WriteLine("Please specify the group name:");
+            groupName = Console.ReadLine();
+        }
 
 
         Console.WriteLine("Please specify the message:");
@@ -53,6 +63,16 @@ try
                 var id = Console.ReadLine();
                 await conn.SendAsync("SendMessageTo", msg, id);
                 break;
+            case "5":
+                await conn.SendAsync("SendToGroup", msg, groupName);
+                break;
+            case "6":
+                await conn.SendAsync("JoinGroup", groupName);
+                break;
+            case "7":
+                await conn.SendAsync("LeaveGroup", groupName);
+                break;
+
         }
     }
 }

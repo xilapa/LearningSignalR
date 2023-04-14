@@ -29,6 +29,25 @@ public class LearningHub : Hub<ILearningHubClient>
         return Clients.Client(destinationId).PrivateMessage(FormatPrivateMessage(msg, Context.ConnectionId));
     }
 
+    public Task SendToGroup(string msg, string groupName)
+    {
+        return Clients.Group(groupName).ReceiveMessage(FormatMessage(msg));
+    }
+
+    public async Task JoinGroup(string groupName)
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+        await Clients.Caller.ReceiveMessage($"Current user joined to group: {groupName}");
+        await Clients.Others.ReceiveMessage($"User {Context.ConnectionId} joined to group: {groupName}");
+    }
+    
+    public async Task LeaveGroup(string groupName)
+    {
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+        await Clients.Caller.ReceiveMessage($"Current user has left the group: {groupName}");
+        await Clients.Others.ReceiveMessage($"User {Context.ConnectionId} has left the group: {groupName}");
+    }
+
     private string FormatMessage(string msg)
     {
         return $"User Id:{Context.ConnectionId} - Message: {msg}";
