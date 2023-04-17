@@ -1,20 +1,23 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using SignalRServer.Hubs;
 using SignalRServer.Models;
 
 namespace SignalRServer.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly IHubContext<LearningHub, ILearningHubClient> _hubContext;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(IHubContext<LearningHub, ILearningHubClient> hubContext)
     {
-        _logger = logger;
+        _hubContext = hubContext;
     }
 
     public IActionResult Index()
     {
+        _hubContext.Clients.All.ReceiveMessage("Someone accessed the home page");
         return View();
     }
 
