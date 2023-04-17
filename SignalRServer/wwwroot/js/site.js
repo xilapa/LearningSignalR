@@ -1,6 +1,7 @@
 ﻿const connection = new signalR.HubConnectionBuilder()
     .withUrl("/learning-hub")
     .configureLogging(signalR.LogLevel.Information)
+    .withHubProtocol(new signalR.protocols.msgpack.MessagePackHubProtocol())
     .build();
 
 const messages = document.getElementById('signalr-message-panel');

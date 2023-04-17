@@ -1,3 +1,4 @@
+using MessagePack;
 using Microsoft.AspNetCore.Http.Connections;
 using SignalRServer.Hubs;
 
@@ -5,7 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSignalR();
+builder.Services.AddSignalR()
+    .AddMessagePackProtocol(opt =>
+    {
+        opt.SerializerOptions = MessagePackSerializerOptions.Standard
+            .WithOmitAssemblyVersion(true);
+    });
 
 var app = builder.Build();
 

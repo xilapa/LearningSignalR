@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Connections;
+﻿using MessagePack;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.Extensions.DependencyInjection;
 
 var url = "http://localhost:5069/learning-hub";
 
@@ -10,6 +12,11 @@ var conn = new HubConnectionBuilder()
         opts =>
     {
         opts.DefaultTransferFormat = TransferFormat.Binary;
+    })
+    .AddMessagePackProtocol(opt =>
+    {
+        opt.SerializerOptions = MessagePackSerializerOptions.Standard
+            .WithOmitAssemblyVersion(true);
     })
     .Build();
 
