@@ -11,7 +11,10 @@ builder.Services.AddSignalR()
     {
         opt.SerializerOptions = MessagePackSerializerOptions.Standard
             .WithOmitAssemblyVersion(true);
-    });
+    })
+    // run multiple instances with different urls to see redis backplane in action
+    // dotnet run --urls "http://localhost:5000"
+    .AddStackExchangeRedis("localhost:6379");
 
 var app = builder.Build();
 
