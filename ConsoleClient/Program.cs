@@ -1,9 +1,16 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿using Microsoft.AspNetCore.Connections;
+using Microsoft.AspNetCore.Http.Connections;
+using Microsoft.AspNetCore.SignalR.Client;
 
 var url = "http://localhost:5069/learning-hub";
 
 var conn = new HubConnectionBuilder()
-    .WithUrl(url)
+    .WithUrl(url, 
+        HttpTransportType.WebSockets | HttpTransportType.ServerSentEvents | HttpTransportType.LongPolling,
+        opts =>
+    {
+        opts.DefaultTransferFormat = TransferFormat.Binary;
+    })
     .Build();
 
 conn.On<string>("ReceiveMessage", msg => Console.WriteLine(msg));
@@ -72,7 +79,6 @@ try
             case "7":
                 await conn.SendAsync("LeaveGroup", groupName);
                 break;
-
         }
     }
 }
